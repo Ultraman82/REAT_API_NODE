@@ -1,6 +1,0 @@
-{
-    "env": {
-        "MONGO_ID": "bautest",
-        "MONGO_PW": "bau0099"
-    }
-}
