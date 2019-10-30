@@ -1,41 +1,40 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Orders were fetched'
-    })
+router.get("/", (req, res, next) => {
+  res.status(200).json({
+    message: "Orders were fetched"
+  });
 });
 
-router.post('/', (req, res, next) => {
-    const order = {
-        productId: req.body.productId,
-        quantity: req.body.quantity
-    };
-    res.status(201).json({
-        message: 'Order was created',
-        order: order
-    })
+router.post("/", (req, res, next) => {
+  const order = {
+    productId: req.body.productId,
+    quantity: req.body.quantity
+  };
+  res.status(201).json({
+    message: "Order was created",
+    order: order
+  });
 });
 
-router.get('/:orderId', (req, res, next) => {    
-    res.status(200).json({
-        message: 'Order detail',
-        orderId: req.params.orderId
-    })
+router.get("/:orderId", (req, res, next) => {
+  res.status(200).json({
+    message: "Order detail",
+    orderId: req.params.orderId
+  });
 });
 
-router.patch('/:orderId', (req, res, next) => {    
-    res.status(200).json({
-        message: 'Updated order!'
-    })
+router.patch("/:orderId", (req, res, next) => {
+  res.status(200).json({
+    message: "Updated order!"
+  });
 });
 
-router.delete('/:orderId', (req, res, next) => {    
-    res.status(200).json({
-        message: 'Deleted order!'
-    })
+router.delete("/:orderId", (req, res, next) => {
+  res.status(200).json({
+    message: "Deleted order!"
+  });
 });
-
 
 module.exports = router;
