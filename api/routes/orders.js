@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const checkAuth = require("../middleware/check-auth");
 
 const Order = require("../models/orders");
 const Product = require("../models/product");
 
-router.get("/", (req, res, next) => {
+router.get("/", checkAuth, (req, res, next) => {
   Order.find()
     .select("product quantity _id")
-    .populate('product', 'name')
+    .populate("product", "name")
     .exec()
     .then(docs => {
       res.status(200).json({
@@ -33,7 +34,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", checkAuth, (req, res, next) => {
   // with mlab, worked without productId existence checking
   // and befor shooting "Product not found" message, mlab shoots err message first
   Product.findById(req.body.productId)
@@ -72,9 +73,9 @@ router.post("/", (req, res, next) => {
     });
 });
 
-router.get("/:orderId", (req, res, next) => {
+router.get("/:orderId", checkAuth, (req, res, next) => {
   Order.findById(req.params.orderId)
-    .populate('product')  
+    .populate("product")
     .exec()
     .then(order => {
       if (!order) {
@@ -97,13 +98,13 @@ router.get("/:orderId", (req, res, next) => {
     });
 });
 
-router.patch("/:orderId", (req, res, next) => {
+router.patch("/:orderId", checkAuth, (req, res, next) => {
   res.status(200).json({
     message: "Updated order!"
   });
 });
 
-router.delete("/:orderId", (req, res, next) => {
+router.delete("/:orderId", checkAuth, (req, res, next) => {
   Order.remove({ _id: req.params.orderId })
     .exec()
     .then(result => {
