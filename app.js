@@ -4,10 +4,10 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
 const userRoutes = require("./api/routes/user");
+const waterwalkRoutes = require("./api/routes/waterwalk");
 
 mongoose.connect(
   `mongodb://${process.env.MONGO_ID}:${process.env.MONGO_PW}@ds233288.mlab.com:33288/graphql`,
@@ -17,10 +17,24 @@ mongoose.connect(
   }
 );
 
+// const subscribe = await fetch(
+//   "https://api.mailerlite.com/api/v2/groups/10941704/subscribers",
+//   {
+//     headers: {
+//       "X-MailerLite-ApiKey": process.env.MAILERLITE_APIKEY,
+//       "Content-Type": "application/json"
+//     },
+//     method: "POST",
+//     body: JSON.stringify({
+//       email: incomingEmail
+//     })
+//   }
+// );
+
 app.use(morgan("dev"));
 
 //makes folders statically abailable
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,6 +55,8 @@ app.use((req, res, next) => {
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/user", userRoutes);
+app.use("/waterwalk", waterwalkRoutes);
+
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status(404);
